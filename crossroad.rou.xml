@@ -1,0 +1,58 @@
+<routes>
+    <!-- 
+        vType定义了车辆类型.
+        id: 类型的唯一标识.
+        accel: 最大加速度 (m/s^2).
+        decel: 最大减速度 (m/s^2).
+        sigma: 驾驶员的反应不确定性 (0-1), 0表示完美驾驶.
+        length: 车辆长度 (m).
+        minGap: 与前车的最小距离 (m).
+        maxSpeed: 最大速度 (m/s).
+        carFollowModel: 跟驰模型 (e.g., IDM, Krauss).
+        laneChangeModel: 变道模型.
+    -->
+    <vType id="autonomous_car" accel="3.5" decel="5.5" sigma="0.2" length="5" minGap="2.0" maxSpeed="25" carFollowModel="IDM" laneChangeModel="LC2013" color="blue"/>
+    <vType id="standard_car" accel="2.5" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="20" carFollowModel="Krauss" laneChangeModel="LC2013" color="red"/>
+
+    <!-- Routes -->
+    <route id="W_E" edges="W_in E_out" />
+    <route id="W_N" edges="W_in N_out" />
+    <route id="W_S" edges="W_in S_out" />
+
+    <route id="E_W" edges="E_in W_out" />
+    <route id="E_N" edges="E_in N_out" />
+    <route id="E_S" edges="E_in S_out" />
+
+    <route id="N_S" edges="N_in S_out" />
+    <route id="N_E" edges="N_in E_out" />
+    <route id="N_W" edges="N_in W_out" />
+
+    <route id="S_N" edges="S_in N_out" />
+    <route id="S_E" edges="S_in E_out" />
+    <route id="S_W" edges="S_in W_out" />
+
+    <!-- 
+        Flows定义了车流.
+        type: 使用的vType.
+        route: 路线.
+        begin/end: 车流的开始和结束时间 (s).
+        vehsPerHour: 每小时生成的车辆数.
+    -->
+    <!-- 从各个方向驶入的混合车流 -->
+    <flow id="f_WE" type="autonomous_car" route="W_E" begin="0" end="3600" vehsPerHour="100" />
+    <flow id="f_EW" type="standard_car" route="E_W" begin="0" end="3600" vehsPerHour="100" />
+    <flow id="f_NS" type="autonomous_car" route="N_S" begin="0" end="3600" vehsPerHour="100" />
+    <flow id="f_SN" type="standard_car" route="S_N" begin="0" end="3600" vehsPerHour="100" />
+
+    <flow id="f_WN" type="standard_car" route="W_N" begin="0" end="3600" vehsPerHour="50" />
+    <flow id="f_WS" type="standard_car" route="W_S" begin="0" end="3600" vehsPerHour="50" />
+
+    <flow id="f_EN" type="standard_car" route="E_N" begin="0" end="3600" vehsPerHour="50" />
+    <flow id="f_ES" type="standard_car" route="E_S" begin="0" end="3600" vehsPerHour="50" />
+
+    <flow id="f_NE" type="standard_car" route="N_E" begin="0" end="3600" vehsPerHour="50" />
+    <flow id="f_NW" type="standard_car" route="N_W" begin="0" end="3600" vehsPerHour="50" />
+
+    <flow id="f_SE" type="standard_car" route="S_E" begin="0" end="3600" vehsPerHour="50" />
+    <flow id="f_SW" type="standard_car" route="S_W" begin="0" end="3600" vehsPerHour="50" />
+</routes>

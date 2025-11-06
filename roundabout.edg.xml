@@ -1,0 +1,16 @@
+<edges>
+  <edge id="Ain" from="A" to="RA" numLanes="1" speed="13.89" priority="2" />
+  <edge id="Bin" from="B" to="RB" numLanes="1" speed="13.89" priority="2" />
+  <edge id="Cin" from="C" to="RC" numLanes="1" speed="13.89" priority="2" />
+  <edge id="Din" from="D" to="RD" numLanes="1" speed="13.89" priority="2" />
+
+  <edge id="Aout" from="RA" to="A" numLanes="1" speed="13.89" />
+  <edge id="Bout" from="RB" to="B" numLanes="1" speed="13.89" />
+  <edge id="Cout" from="RC" to="C" numLanes="1" speed="13.89" />
+  <edge id="Dout" from="RD" to="D" numLanes="1" speed="13.89" />
+
+  <edge id="RAB" from="RA" to="RB" numLanes="1" speed="11.11" priority="3" />
+  <edge id="RBC" from="RB" to="RC" numLanes="1" speed="11.11" priority="3" />
+  <edge id="RCD" from="RC" to="RD" numLanes="1" speed="11.11" priority="3" />
+  <edge id="RDA" from="RD" to="RA" numLanes="1" speed="11.11" priority="3" />
+</edges>
