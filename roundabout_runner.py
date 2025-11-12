@@ -2,6 +2,7 @@ import os
 import sys
 import traci
 
+import algorithms # 导入算法模块
 # --- SUMO环境配置 ---
 if 'SUMO_HOME' in os.environ:
     tools = os.path.join(os.environ['SUMO_HOME'], 'tools')
@@ -13,10 +14,16 @@ class SimulationManager:
     """
     仿真管理器，用于设置和运行SUMO仿真。
     """
-    def __init__(self, sumo_cmd, max_steps, port):
+    def __init__(self, sumo_cmd, max_steps, port,
+                 driving_strategy=None,
+                 consensus_algo=None,
+                 networking_proto=None):
         self.sumo_cmd = sumo_cmd
         self.max_steps = max_steps
         self.port = port
+        self.driving_strategy = driving_strategy
+        self.consensus_algo = consensus_algo
+        self.networking_proto = networking_proto
 
     def run(self):
         """执行TraCI控制循环"""

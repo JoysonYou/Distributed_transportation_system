@@ -93,3 +93,7 @@ python roundabout_runner.py
 ├── roundabout_runner.py     # 环岛场景：Python启动脚本
 └── vehicle_documentation.md # 车辆参数的详细文档
 ```
+
+## 开发者贡献
+
+如果你希望为本项目贡献代码，例如实现自己的共识或通信算法，请查阅我们的 **[开发者指南](DEVELOPER_GUIDE.md)**。
