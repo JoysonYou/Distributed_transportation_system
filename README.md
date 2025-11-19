@@ -11,7 +11,7 @@ This is a traffic simulation project based on [SUMO (Simulation of Urban MObilit
   - In the Crossroad scenario, it simulates a mixed traffic flow of **Autonomous Vehicles** and **Human-Driven Vehicles**.
   - In the Roundabout scenario, vehicles are categorized into **Cautious**, **Normal**, and **Aggressive** based on driving styles, with **differentiated traffic flows** configured for different directions.
 - **Python Control**: Uses Python scripts to start, control, and monitor the simulation process via SUMO's TraCI (Traffic Control Interface) API.
-- **Modular Algorithm Design**: Abstract base classes for algorithms are defined in `algorithms.py`, making it convenient for researchers to insert and test their own traffic coordination and vehicle control algorithms.
+- **Modular Algorithm Design**: Abstract base classes for algorithms are defined in `algorithms.py`, making it convenient for researchers to insert and test their own traffic coordination and vehicle control algorithms. For detailed implementation instructions, please refer to the **[Developer Guide](DEVELOPER_GUIDE.md)**.
 
 ## Requirements
 
@@ -68,11 +68,11 @@ This will launch a simulation of the roundabout scenario, where you can observe 
 
 ## How to Extend and Customize
 
-This project is designed to be easily extensible.
+This project is designed to be easily extensible. **For a deep dive into implementing custom algorithms, we highly recommend reading the [Developer Guide](DEVELOPER_GUIDE.md).**
 
 - **Modify Traffic Flow**: Open the `.rou.xml` file for any scenario (e.g., `crossroad.rou.xml`), and you can modify the `vehsPerHour` or `period` attributes in the `<flow>` tag to adjust traffic density.
 - **Modify Vehicle Parameters**: In the `.rou.xml` file, you can modify parameters under the `<vType>` tag (such as `accel`, `decel`, `maxSpeed`) to customize vehicle physical performance.
-- **Implement New Algorithms**: Open `algorithms.py`, inherit from the corresponding abstract base class (such as `DrivingStrategy`, `SchedulingAlgorithm`), and implement your own `update` method. Then instantiate and call your new algorithm in the corresponding `runner.py` file.
+- **Implement New Algorithms**: Open `algorithms.py`, inherit from the corresponding abstract base class (such as `DrivingStrategy`, `SchedulingAlgorithm`), and implement your own `update` method. Then instantiate and call your new algorithm in the corresponding `runner.py` file. See the **[Developer Guide](DEVELOPER_GUIDE.md)** for step-by-step tutorials.
 
 ## Project File Structure
 
