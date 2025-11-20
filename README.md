@@ -45,16 +45,18 @@ python roundabout_runner.py
 ```
 
 This will launch a simulation of the roundabout scenario, where you can observe how vehicles with different driving styles interact and pass through.
-
 ## Scenario Details
 
 ### Crossroad
 
 - **Network**: `crossroad.net.xml`
-- **Traffic Flow**: `crossroad.rou.xml`
+- **Traffic Flow**: `crossroad.rou.xml` (Defines routes and types). **Vehicle generation is now handled by the `VehicleGenerator` class in `crossroad_runner.py`**, which creates vehicles in a fixed, repeating sequence (Straight -> Left -> Right) for all directions to ensure deterministic traffic patterns.
 - **Vehicle Types**:
   - **Autonomous Vehicle (autonomous_car)**: Blue, with better acceleration and reaction capabilities (`sigma=0.2`).
-  - **Human-Driven Vehicle (standard_car)**: Red, driving parameters simulate ordinary human drivers (`sigma=0.5`), with slight speed perturbations introduced via strategies in `algorithms.py`.
+  - **Human-Driven Vehicle (standard_car)**: Red, driving parameters simulate ordinary human drivers (`sigma=0.5`).
+  - **Straight-Going Vehicle (type_straight)**: Green, specifically assigned to straight routes.
+  - **Left-Turning Vehicle (type_left)**: Orange, specifically assigned to left-turn routes.
+  - **Right-Turning Vehicle (type_right)**: Magenta, specifically assigned to right-turn routes.
 
 ### Roundabout
 

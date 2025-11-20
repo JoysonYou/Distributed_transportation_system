@@ -103,6 +103,25 @@ In your `update` method, you can use the `traci` library to interact with the SU
 
 For more `traci` APIs, please refer to the SUMO TraCI Documentation.
 
+### 5. Customizing Vehicle Generation (Crossroad Scenario)
+
+The Crossroad scenario now uses a `VehicleGenerator` class in `crossroad_runner.py` to deterministically generate vehicles with specific types and routes. This replaces the random flow generation in the `.rou.xml` file.
+
+**How to Customize:**
+
+1.  Open `crossroad_runner.py`.
+2.  Locate the `VehicleGenerator` class.
+3.  Modify the `self.generation_sequence` list in the `__init__` method. This list defines the sequence of (Vehicle Type, Route ID) pairs that will be generated.
+4.  You can also adjust `self.step_interval` to change the frequency of vehicle generation.
+
+```python
+self.generation_sequence = [
+    ("type_straight", "W_E"), # West to East, Straight
+    ("type_left", "N_E"),     # North to East, Left Turn
+    # ... add your custom sequence here
+]
+```
+
 ### 4. Integrate Your Algorithm into the Simulation Runner
 
 Once you have implemented your custom algorithm class, you need to modify `crossroad_runner.py` or `roundabout_runner.py` to instantiate and use them.

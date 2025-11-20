@@ -2,45 +2,73 @@
 
 This document provides a detailed explanation of the vehicle types and their behavior in the SUMO simulation.
 
-
 ## Crossroad Simulation
 
-## Vehicle Types
+### Vehicle Types
 
-There are two types of vehicles in this simulation:
+There are five types of vehicles in this simulation:
 
 *   **Autonomous Car (Blue)**: Represents an autonomous or self-driving vehicle.
 *   **Standard Car (Red)**: Represents a standard vehicle driven by a human.
+*   **Straight-Going Car (Green)**: A standard car specifically assigned to straight routes.
+*   **Left-Turning Car (Orange)**: A standard car specifically assigned to left-turn routes.
+*   **Right-Turning Car (Magenta)**: A standard car specifically assigned to right-turn routes.
 
----
-
-## Vehicle Parameters
+### Vehicle Parameters
 
 The base physical and behavioral parameters for each vehicle type are defined in `crossroad.rou.xml`.
 
-### Blue Car (autonomous_car)
+#### Blue Car (autonomous_car)
 
 *   **Type**: Autonomous Vehicle
 *   **Color**: Blue
 *   **Max Acceleration (`accel`)**: 3.5 m/s²
 *   **Max Deceleration (`decel`)**: 5.5 m/s²
 *   **Max Speed (`maxSpeed`)**: 25 m/s (90 km/h)
-*   **Car Following Model**: `IDM` (Intelligent Driver Model) - A sophisticated model that provides smooth and efficient following behavior.
-*   **Driver Imperfection (`sigma`)**: 0.2 - A low value indicating a near-perfect driver with quick and consistent reactions.
+*   **Car Following Model**: `IDM` (Intelligent Driver Model)
+*   **Driver Imperfection (`sigma`)**: 0.2
 
-### Red Car (standard_car)
+#### Red Car (standard_car)
 
 *   **Type**: Standard Human-Driven Vehicle
 *   **Color**: Red
-*   **Max Acceleration (`accel`)**: 2.5 m/s² (Slower than the autonomous car)
-*   **Max Deceleration (`decel`)**: 4.5 m/s² (Slower than the autonomous car)
-*   **Max Speed (`maxSpeed`)**: 20 m/s (72 km/h) (Slower than the autonomous car)
-*   **Car Following Model**: `Krauss` - A simpler model often used to simulate human driving.
-*   **Driver Imperfection (`sigma`)**: 0.5 - A higher value representing a less perfect human driver with more variability in reaction time.
+*   **Max Acceleration (`accel`)**: 2.5 m/s²
+*   **Max Deceleration (`decel`)**: 4.5 m/s²
+*   **Max Speed (`maxSpeed`)**: 20 m/s (72 km/h)
+*   **Car Following Model**: `Krauss`
+*   **Driver Imperfection (`sigma`)**: 0.5
 
----
+#### Green Car (type_straight)
 
-## Driving Behavior
+*   **Type**: Straight-Going Vehicle
+*   **Color**: Green (0, 255, 0)
+*   **Max Acceleration (`accel`)**: 3.0 m/s²
+*   **Max Deceleration (`decel`)**: 4.5 m/s²
+*   **Max Speed (`maxSpeed`)**: 22 m/s
+*   **Car Following Model**: `Krauss`
+*   **Driver Imperfection (`sigma`)**: 0.5
+
+#### Orange Car (type_left)
+
+*   **Type**: Left-Turning Vehicle
+*   **Color**: Orange (255, 165, 0)
+*   **Max Acceleration (`accel`)**: 3.0 m/s²
+*   **Max Deceleration (`decel`)**: 4.5 m/s²
+*   **Max Speed (`maxSpeed`)**: 18 m/s
+*   **Car Following Model**: `Krauss`
+*   **Driver Imperfection (`sigma`)**: 0.5
+
+#### Magenta Car (type_right)
+
+*   **Type**: Right-Turning Vehicle
+*   **Color**: Magenta (255, 0, 255)
+*   **Max Acceleration (`accel`)**: 3.0 m/s²
+*   **Max Deceleration (`decel`)**: 4.5 m/s²
+*   **Max Speed (`maxSpeed`)**: 15 m/s
+*   **Car Following Model**: `Krauss`
+*   **Driver Imperfection (`sigma`)**: 0.5
+
+### Driving Behavior
 
 The driving behavior is a combination of the base parameters and real-time modifications from `algorithms.py`.
 
