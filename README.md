@@ -1,17 +1,3 @@
-# Distributed Transportation System SUMO Simulation Platform
-
-This is a traffic simulation project based on [SUMO (Simulation of Urban MObility)](https://www.eclipse.org/sumo/) and Python. The platform aims to simulate and analyze vehicle behaviors in different traffic scenarios and provides a scalable foundation framework for developing, testing, and evaluating new traffic management algorithms (such as consensus algorithms, driving strategies, scheduling algorithms, etc.).
-
-## Key Features
-
-- **Multi-Scenario Support**: Built-in support for two typical urban traffic scenarios:
-  - **Crossroad**: A standard four-way intersection controlled by traffic lights.
-  - **Roundabout**: A four-way roundabout **coordinated by traffic lights**, featuring optimized circular geometry and non-uniform traffic flows.
-- **Diverse Vehicle Behaviors**:
-  - In the Crossroad scenario, it simulates a mixed traffic flow of **Autonomous Vehicles** and **Human-Driven Vehicles**.
-  - In the Roundabout scenario, vehicles are categorized into **Cautious**, **Normal**, and **Aggressive** based on driving styles, with **differentiated traffic flows** configured for different directions.
-- **Python Control**: Uses Python scripts to start, control, and monitor the simulation process via SUMO's TraCI (Traffic Control Interface) API.
-- **Modular Algorithm Design**: Abstract base classes for algorithms are defined in `algorithms.py`, making it convenient for researchers to insert and test their own traffic coordination and vehicle control algorithms. For detailed implementation instructions, please refer to the **[Developer Guide](DEVELOPER_GUIDE.md)**.
 
 ## Requirements
 
@@ -79,23 +65,6 @@ This project is designed to be easily extensible. **For a deep dive into impleme
 ## Project File Structure
 
 ```
-.
-├── .gitignore               # Git ignore configuration
-├── algorithms.py            # Definition and implementation of traffic algorithms
-├── crossroad.edg.xml        # Crossroad scenario: Edge definitions
-├── crossroad.net.xml        # Crossroad scenario: Network file
-├── crossroad.nod.xml        # Crossroad scenario: Node definitions
-├── crossroad.rou.xml        # Crossroad scenario: Traffic flow and vehicle type definitions
-├── crossroad.sumocfg        # Crossroad scenario: SUMO configuration file
-├── crossroad_runner.py      # Crossroad scenario: Python startup script
-├── roundabout.edg.xml       # Roundabout scenario: Edge definitions (includes circular geometry)
-├── roundabout.net.xml       # Roundabout scenario: Network file
-├── roundabout.netccfg       # Roundabout scenario: Netconvert configuration file
-├── roundabout.nod.xml       # Roundabout scenario: Node definitions
-├── roundabout.rou.xml       # Roundabout scenario: Traffic flow and vehicle type definitions
-├── roundabout.sumocfg       # Roundabout scenario: SUMO configuration file
-├── roundabout.tll.xml       # Roundabout scenario: Traffic light logic definitions
-├── roundabout_runner.py     # Roundabout scenario: Python startup script
 └── vehicle_documentation.md # Detailed documentation of vehicle parameters
 ```
 

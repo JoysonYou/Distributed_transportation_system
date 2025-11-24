@@ -96,11 +96,12 @@ A vehicle's path and turning decisions are governed by two main components:
 ### 2. Lane Changing Model
 
 *   **What it is**: The logic a vehicle uses to decide when to change lanes on a multi-lane road.
-*   **How it works**: Both vehicle types use the `LC2013` model. This model allows vehicles to change lanes for two main reasons:
-    1.  **Strategic**: To overtake a slower vehicle and achieve a higher speed.
-    2.  **Cooperative/Tactical**: To get into the correct lane for an upcoming turn that is dictated by its pre-defined route.
-
-
+*   **How it works**: The intersection is configured with **dedicated lanes** for each movement:
+    *   **Lane 0 (Rightmost)**: Dedicated for **Right Turns**.
+    *   **Lane 1 (Middle)**: Dedicated for **Straight** traffic.
+    *   **Lane 2 (Leftmost)**: Dedicated for **Left Turns**.
+    
+    Vehicles will automatically select the appropriate lane based on their assigned route and turn direction well before reaching the intersection. The `LC2013` model ensures they merge into the correct lane efficiently.
 
 ## Roundabout Simulation
 

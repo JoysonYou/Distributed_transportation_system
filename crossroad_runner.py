@@ -16,8 +16,8 @@ class VehicleGenerator:
     用于替代随机生成的车流，按照固定的顺序和时间间隔生成车辆。
     每个车型（直行、左转、右转）都有其固定的行驶路线模式。
     """
-    def __init__(self):
-        self.step_interval = 40  # 每40步生成一辆车
+    def __init__(self, step_interval=40):
+        self.step_interval = step_interval  # 生成间隔 (步数)
         self.vehicle_count = 0
         
         # 定义生成序列: (车型ID, 路线ID)
@@ -122,7 +122,8 @@ if __name__ == "__main__":
     my_networking = algorithms.MyNetworking()
     
     # 实例化固定路线生成器
-    my_vehicle_generator = VehicleGenerator()
+    GENERATION_INTERVAL = 40 # 设置生成车辆的时间间隔（步数）
+    my_vehicle_generator = VehicleGenerator(step_interval=GENERATION_INTERVAL)
 
     # --- 运行仿真 ---
     print("正在启动十字路口仿真...")

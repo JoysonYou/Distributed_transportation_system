@@ -91,9 +91,10 @@ class MyDrivingStrategy(DrivingStrategy):
             if traci.vehicle.getTypeID(veh_id) == "standard_car":
                 # 使用setSpeedFactor来调整速度，避免车辆卡在0速
                 # 我们只在新车辆出现时或以一定概率调整，以减少计算开销
-                if veh_id not in self.initialized_vehicles or random.random() < 0.1:
-                    random_factor = random.uniform(0.9, 1.1)
-                    traci.vehicle.setSpeedFactor(veh_id, random_factor)
+                # if veh_id not in self.initialized_vehicles or random.random() < 0.1:
+                #     random_factor = random.uniform(0.9, 1.1)
+                #     traci.vehicle.setSpeedFactor(veh_id, random_factor)
+                pass
 
 class MyTrafficLightScheduling(SchedulingAlgorithm):
     """一个简单的交通灯调度示例。"""
