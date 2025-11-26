@@ -11,13 +11,7 @@
         carFollowModel: 跟驰模型 (e.g., IDM, Krauss).
         laneChangeModel: 变道模型.
     -->
-    <vType id="autonomous_car" accel="3.5" decel="5.5" sigma="0" length="5" minGap="2.0" maxSpeed="25" carFollowModel="IDM" laneChangeModel="LC2013" color="blue"/>
-    <vType id="standard_car" accel="2.5" decel="4.5" sigma="0" length="5" minGap="2.5" maxSpeed="20" carFollowModel="Krauss" laneChangeModel="LC2013" color="red"/>
-    
-    <!-- New Vehicle Types for specific behaviors -->
-    <vType id="type_straight" accel="3.0" decel="4.5" sigma="0" length="5" minGap="2.5" maxSpeed="22" carFollowModel="Krauss" laneChangeModel="LC2013" color="0,255,0"/>
-    <vType id="type_left" accel="3.0" decel="4.5" sigma="0" length="4.5" minGap="2.5" maxSpeed="18" carFollowModel="Krauss" laneChangeModel="LC2013" color="255,165,0"/>
-    <vType id="type_right" accel="3.0" decel="4.5" sigma="0" length="4.5" minGap="2.5" maxSpeed="15" carFollowModel="Krauss" laneChangeModel="LC2013" color="255,0,255"/>
+    <vType id="connected_car" accel="3.0" decel="4.5" sigma="0" length="5" minGap="2.5" maxSpeed="20" carFollowModel="Krauss" laneChangeModel="LC2013" color="yellow"/>
 
     <!-- Routes -->
     <route id="W_E" edges="W_in E_out" />
@@ -36,7 +30,4 @@
     <route id="S_E" edges="S_in E_out" />
     <route id="S_W" edges="S_in W_out" />
 
-    <!-- 
-        Flows have been removed to allow fixed route generation via Python script.
-    -->
 </routes>

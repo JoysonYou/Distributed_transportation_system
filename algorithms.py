@@ -65,36 +65,134 @@ import random
 
 class MyDrivingStrategy(DrivingStrategy):
     """
-    一个驾驶策略示例，用于演示如何根据车辆类型改变其行为和外观。
+    驾驶策略。
+    定义了三种固定的加速度挡位供策略选择。
     """
+    # 加速度挡位 (m/s^2)
+    ACCEL_POS = 2.0   # 加速
+    ACCEL_ZERO = 0.0  # 匀速
+    ACCEL_NEG = -2.0  # 减速
+    
+    # 速度限制 (m/s)
+    MAX_SPEED = 20.0
+    MIN_SPEED = 0.0
+
     def __init__(self):
         self.initialized_vehicles = set()
 
     def update(self, step: int):
         """
         在每个仿真步长调用此方法。
-        - 为新出现的车辆根据其类型设置颜色。
-        - 对标准汽车的速度进行微小扰动，模拟人类驾驶行为。
         """
+        # 1. 采样间隔检查 (0.2s = 2 steps)
+        if step % 2 != 0:
+            return
+
+        # 2. 获取红绿灯信息
+        junction_id = "J0"
+        try:
+            tl_state = traci.trafficlight.getRedYellowGreenState(junction_id)
+            tl_phase = traci.trafficlight.getPhase(junction_id)
+        except traci.TraCIException:
+            tl_state = ""
+            tl_phase = -1
+        
+        tl_info = {
+            "id": junction_id,
+            "state": tl_state,
+            "phase": tl_phase
+        }
+
+        # 3. 获取车辆信息并分类
         vehicle_ids = traci.vehicle.getIDList()
+        decision_vehicles = {}
+        
         for veh_id in vehicle_ids:
-            # 当车辆首次出现时，根据类型设置颜色
             if veh_id not in self.initialized_vehicles:
-                veh_type = traci.vehicle.getTypeID(veh_id)
-                if veh_type == "autonomous_car":
-                    traci.vehicle.setColor(veh_id, (0, 0, 255, 255))  # 蓝色
-                elif veh_type == "standard_car":
-                    traci.vehicle.setColor(veh_id, (255, 0, 0, 255))  # 红色
+                traci.vehicle.setColor(veh_id, (255, 255, 0, 255)) # 黄色
                 self.initialized_vehicles.add(veh_id)
 
-            # 对标准汽车的速度进行微小扰动
-            if traci.vehicle.getTypeID(veh_id) == "standard_car":
-                # 使用setSpeedFactor来调整速度，避免车辆卡在0速
-                # 我们只在新车辆出现时或以一定概率调整，以减少计算开销
-                # if veh_id not in self.initialized_vehicles or random.random() < 0.1:
-                #     random_factor = random.uniform(0.9, 1.1)
-                #     traci.vehicle.setSpeedFactor(veh_id, random_factor)
-                pass
+            try:
+                lane_id = traci.vehicle.getLaneID(veh_id)
+                edge_id = traci.vehicle.getRoadID(veh_id)
+                
+                # 只处理进入路口的车辆 (edge以_in结尾)
+                if edge_id.endswith("_in"):
+                    lane_len = traci.lane.getLength(lane_id)
+                    lane_pos = traci.vehicle.getLanePosition(veh_id)
+                    dist_to_junction = lane_len - lane_pos
+                    
+                    if dist_to_junction <= 30.0:
+                        # --- 进入决策区域 (<= 30m) ---
+                        # 收集信息传给策略
+                        veh_info = {
+                            "id": veh_id,
+                            "speed": traci.vehicle.getSpeed(veh_id),
+                            "acceleration": traci.vehicle.getAcceleration(veh_id),
+                            "route": traci.vehicle.getRouteID(veh_id),
+                            "dist_to_junction": dist_to_junction,
+                            "lane_id": lane_id
+                        }
+                        decision_vehicles[veh_id] = veh_info
+                        
+                        # 设置为手动控制模式 (SpeedMode 0), 允许完全控制加速度
+                        traci.vehicle.setSpeedMode(veh_id, 0)
+                    else:
+                        # --- 决策区域外 (> 30m) ---
+                        # 保持最大速度 (恢复默认SpeedMode或设置为最大速度)
+                        # 这里我们使用默认的CarFollowing模型，但请求最大速度
+                        traci.vehicle.setSpeedMode(veh_id, 31) # 恢复默认行为
+                        traci.vehicle.setSpeed(veh_id, self.MAX_SPEED)
+                else:
+                    # --- 已经在路口内或离开路口 ---
+                    # 恢复默认行为
+                    traci.vehicle.setSpeedMode(veh_id, 31)
+
+            except traci.TraCIException:
+                continue
+
+        # 4. 调用策略接口并应用控制
+        if decision_vehicles:
+            commands = self.compute_strategy(step, decision_vehicles, tl_info)
+            
+            for veh_id, accel_cmd in commands.items():
+                if veh_id in decision_vehicles:
+                    # 应用加速度控制，持续时间为采样间隔 (0.2s)
+                    traci.vehicle.setAcceleration(veh_id, accel_cmd, duration=0.2)
+
+    def compute_strategy(self, step: int, vehicle_data: dict, traffic_light_data: dict) -> dict:
+        """
+        策略算法接口。
+        根据车辆状态和红绿灯信息，计算每辆车的加速度控制指令。
+        
+        Args:
+            step: 当前仿真步数
+            vehicle_data: 包含决策区域内车辆信息的字典。
+            traffic_light_data: 包含红绿灯信息的字典。
+                                
+        Returns:
+            commands: 包含每辆车加速度指令的字典。
+        """
+        commands = {}
+        
+        # --- 实时数据打印 (用于验证) ---
+        print(f"\n[Strategy] Step {step} | TL Phase: {traffic_light_data['phase']} | State: {traffic_light_data['state']}")
+        print(f"{'Vehicle ID':<15} | {'Dist (m)':<10} | {'Speed (m/s)':<12} | {'Accel (m/s^2)':<15} | {'Command':<10}")
+        print("-" * 70)
+
+        # TODO: 其他开发者将在此处实现具体的策略逻辑
+        # 目前作为占位符，所有车辆保持匀速
+        for veh_id, info in vehicle_data.items():
+            # 简单的示例逻辑：如果红灯且距离近，减速；否则匀速
+            # 注意：这只是为了演示数据流，并非真正的策略
+            command = self.ACCEL_ZERO
+            
+            commands[veh_id] = command
+            
+            # 打印每辆车的数据和决策
+            print(f"{veh_id:<15} | {info['dist_to_junction']:<10.2f} | {info['speed']:<12.2f} | {info['acceleration']:<15.2f} | {command:<10}")
+            
+        return commands
 
 class MyTrafficLightScheduling(SchedulingAlgorithm):
     """一个简单的交通灯调度示例。"""

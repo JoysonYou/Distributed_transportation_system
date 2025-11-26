@@ -24,30 +24,30 @@ class VehicleGenerator:
         # 确保覆盖所有方向和所有行为
         self.generation_sequence = [
             # 组1: 主要是向东行驶
-            ("type_straight", "W_E"), # 西->东 (直行)
-            ("type_left", "N_E"),     # 北->东 (左转)
-            ("type_right", "S_E"),    # 南->东 (右转)
+            ("connected_car", "W_E"), # 西->东 (直行)
+            ("connected_car", "N_E"), # 北->东 (左转)
+            ("connected_car", "S_E"), # 南->东 (右转)
             
             # 组2: 主要是向西行驶
-            ("type_straight", "E_W"), # 东->西 (直行)
-            ("type_left", "S_W"),     # 南->西 (左转)
-            ("type_right", "N_W"),    # 北->西 (右转)
+            ("connected_car", "E_W"), # 东->西 (直行)
+            ("connected_car", "S_W"), # 南->西 (左转)
+            ("connected_car", "N_W"), # 北->西 (右转)
             
             # 组3: 主要是向南行驶
-            ("type_straight", "N_S"), # 北->南 (直行)
-            ("type_left", "E_S"),     # 东->南 (左转)
-            ("type_right", "W_S"),    # 西->南 (右转)
+            ("connected_car", "N_S"), # 北->南 (直行)
+            ("connected_car", "E_S"), # 东->南 (左转)
+            ("connected_car", "W_S"), # 西->南 (右转)
             
             # 组4: 主要是向北行驶
-            ("type_straight", "S_N"), # 南->北 (直行)
-            ("type_left", "W_N"),     # 西->北 (左转)
-            ("type_right", "E_N"),    # 东->北 (右转)
+            ("connected_car", "S_N"), # 南->北 (直行)
+            ("connected_car", "W_N"), # 西->北 (左转)
+            ("connected_car", "E_N"), # 东->北 (右转)
         ]
         self.sequence_index = 0
 
     def update(self, step):
         """在每个仿真步长调用，检查是否需要生成车辆。"""
-        if step % self.step_interval == 0:
+        if self.vehicle_count < len(self.generation_sequence) and step % self.step_interval == 0:
             type_id, route_id = self.generation_sequence[self.sequence_index]
             veh_id = f"fixed_veh_{self.vehicle_count}"
             
@@ -57,7 +57,7 @@ class VehicleGenerator:
             except traci.TraCIException as e:
                 print(f"Error adding vehicle {veh_id}: {e}")
 
-            self.sequence_index = (self.sequence_index + 1) % len(self.generation_sequence)
+            self.sequence_index += 1
             self.vehicle_count += 1
 
 class SimulationManager:
