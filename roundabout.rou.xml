@@ -1,0 +1,47 @@
+<routes>
+    <vType id="cautious_car" accel="2.2" decel="5.0" sigma="0.9" length="5" maxSpeed="12.0" carFollowModel="IDM" tau="1.8" minGap="2.5" color="blue"/>
+    <vType id="normal_car" accel="2.8" decel="4.5" sigma="0.5" length="5" maxSpeed="13.89" carFollowModel="IDM" tau="1.2" minGap="2.0" color="green"/>
+    <vType id="aggressive_car" accel="3.5" decel="4.0" sigma="0.2" length="5" maxSpeed="15.0" carFollowModel="IDM" tau="1.0" minGap="1.5" color="red"/>
+
+    <vTypeDistribution id="car_distribution" vTypes="cautious_car normal_car aggressive_car" probabilities="0.2 0.6 0.2"/>
+
+    <!-- Routes from North -->
+    <route id="route_AB" edges="Ain RAD RDC RCB Bout" />
+    <route id="route_AC" edges="Ain RAD RDC Cout" />
+    <route id="route_AD" edges="Ain RAD Dout" />
+
+    <!-- Routes from East -->
+    <route id="route_BC" edges="Bin RBA RAD RDC Cout" />
+    <route id="route_BD" edges="Bin RBA RAD Dout" />
+    <route id="route_BA" edges="Bin RBA Aout" />
+
+    <!-- Routes from South -->
+    <route id="route_CD" edges="Cin RCB RBA RAD Dout" />
+    <route id="route_CA" edges="Cin RCB RBA Aout" />
+    <route id="route_CB" edges="Cin RCB Bout" />
+
+    <!-- Routes from West -->
+    <route id="route_DA" edges="Din RDC RCB RBA Aout" />
+    <route id="route_DB" edges="Din RDC RCB Bout" />
+    <route id="route_DC" edges="Din RDC Cout" />
+
+    <!-- Flows from North (Reduced Traffic) -->
+    <flow id="flow_AB" type="car_distribution" route="route_AB" begin="0" end="3600" period="90" />
+    <flow id="flow_AC" type="car_distribution" route="route_AC" begin="0" end="3600" period="90" />
+    <flow id="flow_AD" type="car_distribution" route="route_AD" begin="0" end="3600" period="90" />
+
+    <!-- Flows from East (Reduced Traffic) -->
+    <flow id="flow_BC" type="car_distribution" route="route_BC" begin="0" end="3600" period="180" />
+    <flow id="flow_BD" type="car_distribution" route="route_BD" begin="0" end="3600" period="180" />
+    <flow id="flow_BA" type="car_distribution" route="route_BA" begin="0" end="3600" period="180" />
+
+    <!-- Flows from South (Reduced Traffic) -->
+    <flow id="flow_CD" type="car_distribution" route="route_CD" begin="0" end="3600" period="240" />
+    <flow id="flow_CA" type="car_distribution" route="route_CA" begin="0" end="3600" period="240" />
+    <flow id="flow_CB" type="car_distribution" route="route_CB" begin="0" end="3600" period="240" />
+
+    <!-- Flows from West (Reduced Traffic) -->
+    <flow id="flow_DA" type="car_distribution" route="route_DA" begin="0" end="3600" period="360" />
+    <flow id="flow_DB" type="car_distribution" route="route_DB" begin="0" end="3600" period="360" />
+    <flow id="flow_DC" type="car_distribution" route="route_DC" begin="0" end="3600" period="360" />
+</routes>

@@ -1,0 +1,11 @@
+<configuration>
+    <input>
+        <net-file value="roundabout.net.xml"/>
+        <route-files value="roundabout.rou.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="3600"/>
+    </time>
+    <remote-port value="8814"/>
+</configuration>

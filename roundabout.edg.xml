@@ -1,0 +1,16 @@
+<edges>
+  <edge id="Ain" from="A" to="RA" numLanes="1" speed="13.89" priority="2" />
+  <edge id="Bin" from="B" to="RB" numLanes="1" speed="13.89" priority="2" />
+  <edge id="Cin" from="C" to="RC" numLanes="1" speed="13.89" priority="2" />
+  <edge id="Din" from="D" to="RD" numLanes="1" speed="13.89" priority="2" />
+
+  <edge id="Aout" from="RA" to="A" numLanes="1" speed="13.89" />
+  <edge id="Bout" from="RB" to="B" numLanes="1" speed="13.89" />
+  <edge id="Cout" from="RC" to="C" numLanes="1" speed="13.89" />
+  <edge id="Dout" from="RD" to="D" numLanes="1" speed="13.89" />
+
+  <edge id="RAD" from="RA" to="RD" numLanes="1" speed="11.11" priority="3" shape="0.00,25.00 -3.91,24.69 -7.73,23.78 -11.35,22.28 -14.69,20.23 -17.68,17.68 -20.23,14.69 -22.28,11.35 -23.78,7.73 -24.69,3.91 -25.00,0.00"/>
+  <edge id="RDC" from="RD" to="RC" numLanes="1" speed="11.11" priority="3" shape="-25.00,-0.00 -24.69,-3.91 -23.78,-7.73 -22.28,-11.35 -20.23,-14.69 -17.68,-17.68 -14.69,-20.23 -11.35,-22.28 -7.73,-23.78 -3.91,-24.69 0.00,-25.00"/>
+  <edge id="RCB" from="RC" to="RB" numLanes="1" speed="11.11" priority="3" shape="0.00,-25.00 3.91,-24.69 7.73,-23.78 11.35,-22.28 14.69,-20.23 17.68,-17.68 20.23,-14.69 22.28,-11.35 23.78,-7.73 24.69,-3.91 25.00,0.00"/>
+  <edge id="RBA" from="RB" to="RA" numLanes="1" speed="11.11" priority="3" shape="25.00,0.00 24.69,3.91 23.78,7.73 22.28,11.35 20.23,14.69 17.68,17.68 14.69,20.23 11.35,22.28 7.73,23.78 3.91,24.69 0.00,25.00"/>
+</edges>
